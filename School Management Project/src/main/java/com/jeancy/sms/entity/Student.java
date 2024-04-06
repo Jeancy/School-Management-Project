@@ -48,14 +48,6 @@ public class Student {
         return this.birthdate.until(LocalDate.now()).getYears();
     }
     
-    public LocalDate getBirthdate(){
-        return birthdate;
-    }
-    
-    public void setBirthdate(LocalDate birthdate){
-        this.birthdate = birthdate;
-    }
-    
     @Override
     public String toString() {
         return "Student{" + "id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + '}';
