@@ -47,6 +47,17 @@ public class Student {
     public int getAge(){
         return this.birthdate.until(LocalDate.now()).getYears();
     }
+    
+    public LocalDate getBirthdate(){
+        return birthdate;
+    }
+    
+    public void setBirthdate(LocalDate birthdate){
+        this.birthdate = birthdate;
+    }
+    public int getAge(){
+        return this.birthdate.until(LocalDate.now()).getYears();
+    }
 
     @Override
     public String toString() {
