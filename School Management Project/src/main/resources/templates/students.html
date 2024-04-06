@@ -60,6 +60,8 @@
                         <th> Student First Name </th>
                         <th> Student Last Name </th>
                         <th> Student Email </th>
+                        <th> Student Birth Date </th>
+                        <th> Student Age </th>
                         <th> Actions </th>
                     </tr>
                 </thead>
@@ -68,6 +70,8 @@
                         <td th:text = "${student.firstName}"> </td>
                         <td th:text = "${student.lastName}"> </td>   
                         <td th:text = "${student.email}"> </td>
+                        <td th:text = "${student.birthdate}" th:format="'dd-MM-yyyy'"> </td>
+                        <td th:text= "${student.age}"> </td>
                         <td>
                             <a th:href="@{/students/edit/{id}(id=${student.id})}"
                                class = "btn btn-primary">Update</a>

@@ -1,0 +1,24 @@
+{
+    "elements": {},
+    "attributes": {
+        "th:text": {
+            "context": "td"
+        },
+        "th:number": {
+            "context": "td"
+        },
+        "th:action": {
+            "context": "form"
+        },
+        "th:field": {},
+        "th:href": {
+            "context": "a"
+        },
+        "th:each": {
+            "context": "tr"
+        },
+        "th:date": {
+            "context": "td"
+        }
+    }
+}
