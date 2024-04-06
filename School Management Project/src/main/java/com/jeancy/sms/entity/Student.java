@@ -55,10 +55,7 @@ public class Student {
     public void setBirthdate(LocalDate birthdate){
         this.birthdate = birthdate;
     }
-    public int getAge(){
-        return this.birthdate.until(LocalDate.now()).getYears();
-    }
-
+    
     @Override
     public String toString() {
         return "Student{" + "id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + '}';
