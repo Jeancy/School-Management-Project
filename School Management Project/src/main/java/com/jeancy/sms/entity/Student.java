@@ -21,16 +21,16 @@ public class Student {
     @Column(name = "first_name", nullable = false)
     private String firstName;
     
-    @Column(name = "last_name", nullable = false)
-    
+    @Column(name = "last_name", nullable = false)    
     private String lastName;
+    
     @Column(name = "email", nullable = false)
     private String email;
     
-    @Column(name = "birthdate")
+    @Column(name = "birthdate", nullable = false)
     private LocalDate birthdate;
     
-    @Column(name = "age")
+    @Column(name = "age", nullable = false)
     private String age;
     
     public Student(String firstName, String lastName, String email, 
@@ -45,14 +45,8 @@ public class Student {
     }
     
     public int getAge(){
-        return this.birthdate.until(LocalDate.now()).getYears();
+        return birthdate.until(LocalDate.now()).getYears();
     }
-    
-    @Override
-    public String toString() {
-        return "Student{" + "id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + '}';
-    }
-
     
     
 }
