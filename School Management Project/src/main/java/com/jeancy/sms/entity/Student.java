@@ -8,8 +8,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 @Entity
 @Table(name="students")
 public class Student {
@@ -31,7 +33,7 @@ public class Student {
     private LocalDate birthdate;
     
     @Column(name = "age", nullable = false)
-    private String age;
+    private Integer age;
     
     public Student(String firstName, String lastName, String email, 
                    LocalDate birthdate) {
@@ -40,13 +42,4 @@ public class Student {
         this.email = email;
         this.birthdate = birthdate;
     }
-
-    public Student() {
-    }
-    
-    public int getAge(){
-        return birthdate.until(LocalDate.now()).getYears();
-    }
-    
-    
 }

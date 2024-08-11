@@ -2,6 +2,7 @@ package com.jeancy.sms.controller;
 
 import com.jeancy.sms.entity.Student;
 import com.jeancy.sms.service.StudentService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,13 +15,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class StudentController {
     //The student controller depends or relies on the StudentService interface for mapping
-    private final StudentService studentService;
     
-    //constructor based dependancy injection StudentController depends on StudentService class.
-    public StudentController(StudentService studentService) {
-        super();
-        this.studentService = studentService;
-    }
+    @Autowired
+    private StudentService studentService;
+    
     // Create hanler method to handle or get list of students and return model and view. 
     @GetMapping("/students")
     public String listStudents (Model model){
@@ -59,6 +57,7 @@ public class StudentController {
         existingStudent.setFirstName(student.getFirstName());
         existingStudent.setLastName(student.getLastName());
         existingStudent.setEmail(student.getEmail());
+        existingStudent.setAge(student.getAge());
         // Save updated student.
         studentService.updateStudent(existingStudent);
         return "redirect:/students";

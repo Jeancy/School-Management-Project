@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 
-<html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Students Management System </title>
-        <link rel="stylesheet" 
-             href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
-            integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" 
-            crossorigin="anonymous">
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet"
+              href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" />      
+              
     </head>
     <body style="background-color: burlywood">
         <nav class="navbar navbar-expand-md bg-dark navbar-dark">
@@ -51,43 +50,44 @@
                         <form th:action="@{/students}" th:object = "${student}" method="POST">
                            <div class="form-group">
                                <label> Student First Name </label>
-                               <input
+                               <input class="form-control"
                                     type="text" 
                                     name="firstName"
-                                    th:field="*{firstName}"
-                                    class="form-control"
+                                    th:field="*{firstName}"                                    
                                     placeholder="Enter Student First Name"
-                               >
+                                    required="required"
+                               />
                            </div> 
                             <div class="form-group">
                                <label> Student Last Name </label>
-                               <input
+                               <input class="form-control"
                                     type="text" 
                                     name="lastName"
-                                    th:field="*{lastName}"
-                                    class="form-control"
+                                    th:field="*{lastName}"                                    
                                     placeholder="Enter Student Last Name"
-                               >
+                                    required
+                               />
                            </div>
                             <div class="form-group">
                                <label> Student Email </label>
-                               <input
+                               <input class="form-control"
                                     type="text" 
                                     name="email"
                                     th:field="*{email}"
-                                    class="form-control"
                                     placeholder="Enter Student Email"
-                               >
+                                    required
+                               />
                            </div>
                             <div class="form-group">
                                <label> Student Birth Date </label>
-                               <input
+                               <input class="form-control"
                                     type="date" 
                                     name="birthdate"
                                     th:field="*{birthdate}"
-                                    class="form-control"
                                     placeholder="Pick Student Birth Date"
-                               >
+                                    required
+                              /> 
+                              
                            </div>
                             <div class="box-footer">
                                 <button type="submit" class="btn btn-primary">
