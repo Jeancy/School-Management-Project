@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class StudentController {
     //The student controller depends or relies on the StudentService interface for mapping
-    
     @Autowired
     private StudentService studentService;
     
@@ -28,8 +27,7 @@ public class StudentController {
     
     // Handler method to create a new student.
     @GetMapping("/students/new")
-    public String createStudentForm(Model model){
-        Student student = new Student();
+    public String createStudentForm(Model model,Student student ){
         model.addAttribute("student", student);
         return "create_student";
     }
