@@ -4,6 +4,7 @@ package com.jeancy.sms.serviceimpl;
 import com.jeancy.sms.entity.Student;
 import com.jeancy.sms.repository.StudentRepository;
 import com.jeancy.sms.service.StudentService;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.List;
@@ -30,7 +31,7 @@ public class StudentServiceImpl implements StudentService {
     
     // Saving a newly created student
     @Override
-    public Student saveStudent(Student student) {
+    public Student saveStudent(Student student) {       
         student.setAge(calculateAge(student.getBirthdate()));
         return studentRepository.save(student);
     }
