@@ -10,13 +10,10 @@ import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.Period;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Type;
 import org.springframework.web.multipart.MultipartFile;
 
 @Getter
@@ -45,7 +42,8 @@ public class Student {
     private Integer age;
    
     @Lob
-    @Column(name = "image", nullable = true)
+    
+    @Column(name = "image",columnDefinition = "longblob" , nullable = true)
     private byte[] imageBytes;
 
     public Student(String firstName, String lastName, String email, 
@@ -57,7 +55,7 @@ public class Student {
         try {
             this.imageBytes = imageFile.getBytes();
         } catch (IOException ex) {
-            ex.printStackTrace();
+            ex.getStackTrace();
         }
     }
     @Override
