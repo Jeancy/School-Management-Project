@@ -13,7 +13,6 @@ import java.time.LocalDate;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Type;
 import org.springframework.web.multipart.MultipartFile;
 
 @Getter
@@ -41,11 +40,10 @@ public class Student {
     @Column(name = "age", nullable = false)
     private Integer age;
    
-    @Lob
-    
+    @Lob    
     @Column(name = "image",columnDefinition = "longblob" , nullable = true)
     private byte[] imageBytes;
-
+    
     public Student(String firstName, String lastName, String email, 
                    LocalDate birthdate, MultipartFile imageFile) {
         this.firstName = firstName;

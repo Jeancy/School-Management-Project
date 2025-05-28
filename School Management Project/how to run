@@ -1,0 +1,10 @@
+To build image run:docker build -t school-management-project:0.0.1 . 
+
+
+
+
+docker run -d --name school-management-project -p 8080:8080 \
+-e SPRING_DATASOURCE_URL=jdbc:mysql://host.docker.internal:3306/sms \
+-e SPRING_DATASOURCE_USERNAME=root \
+-e SPRING_DATASOURCE_PASSWORD=11155 \
+school-management-project:0.0.1

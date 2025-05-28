@@ -4,7 +4,7 @@ package com.jeancy.sms.service;
 import com.jeancy.sms.entity.Student;
 import java.util.List;
 
-// The StudentServicedefines all the business logic so all needed methods must be declared here.
+// The StudentService defines all the business logic so all needed methods must be declared here.
 public interface StudentService {
     // to get the students list
     List<Student> getAllStudents();

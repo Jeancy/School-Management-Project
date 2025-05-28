@@ -1,55 +1,49 @@
-
 package com.jeancy.sms.serviceimpl;
 
 import com.jeancy.sms.entity.Student;
 import com.jeancy.sms.repository.StudentRepository;
 import com.jeancy.sms.service.StudentService;
-import java.io.IOException;
-import java.time.LocalDate;
-import java.time.Period;
-import java.util.List;
+import jakarta.persistence.EntityNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-// Every service implementation class must be annotated with @Service
+import java.util.List;
+
 @Service
 public class StudentServiceImpl implements StudentService {
-    //StudentServiceImpl relies or depends on the StudentRepository interface
-    private final StudentRepository studentRepository;
-    // Constractor based dependancy injection
-    public StudentServiceImpl(StudentRepository studentRepository) {
-        this.studentRepository = studentRepository;
-    }
-    // Getting list of students.
+
+    @Autowired
+    private StudentRepository studentRepository;
+
     @Override
     public List<Student> getAllStudents() {
-         return studentRepository.findAll();
+        return studentRepository.findAll();
     }
-    // Calculating the age automaticaly
-    private int calculateAge(LocalDate birthDate) {
-        return Period.between(birthDate, LocalDate.now()).getYears();
-    }
-    
-    // Saving a newly created student
+
     @Override
-    public Student saveStudent(Student student) {       
-        student.setAge(calculateAge(student.getBirthdate()));
+    public Student saveStudent(Student student) {
         return studentRepository.save(student);
     }
-    // Retreaving a student based on given id
+
     @Override
     public Student getStudentById(Long id) {
-        return studentRepository.findById(id).orElse(null);
+        return studentRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Student with ID " + id + " not found"));
     }
-    //Updating an existing student
+
     @Override
     public Student updateStudent(Student student) {
-        student.setAge(calculateAge(student.getBirthdate()));
+        if (!studentRepository.existsById(student.getId())) {
+            throw new EntityNotFoundException("Student with ID " + student.getId() + " not found");
+        }
         return studentRepository.save(student);
     }
-    // Deleting a student based on given id.
+
     @Override
     public void deleteStudentById(Long id) {
+        if (!studentRepository.existsById(id)) {
+            throw new EntityNotFoundException("Student with ID " + id + " not found");
+        }
         studentRepository.deleteById(id);
     }
-    
 }

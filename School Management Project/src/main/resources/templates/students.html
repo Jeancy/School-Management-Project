@@ -72,10 +72,14 @@
                         <td>
                             <img th:src="@{/students/image/{id}(id=${student.id})}" 
                                     alt="Student Picture"
-                                    style="width: 60px; height: 60px; object-fit: cover; border-radius: 5px;" />
+                                    style="width: 60px; height: 60px; object-fit: cover;
+                                    border-radius: 5px;" />
                         </td>
                         <td>
-                            <a th:href="@{/students/edit/{id}(id=${student.id})}" class="btn btn-primary">Update</a>
+                            <a th:href="@{/students/edit/{id}(id=${student.id})}"
+                               class="btn btn-primary">
+                                Update
+                            </a>
                             <a th:href="@{/students/{id}(id=${student.id})}"
                                class="btn btn-danger"
                                onclick="return confirmDelete();">
