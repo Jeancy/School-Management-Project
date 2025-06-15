@@ -1,8 +1,11 @@
 package com.jeancy.sms.controller;
 
+import com.jeancy.sms.dto.StudentDto;
 import com.jeancy.sms.entity.Student;
+import com.jeancy.sms.exception.StudentNotFoundException;
 import com.jeancy.sms.service.StudentService;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import lombok.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,12 +39,12 @@ public class StudentController {
 
     @GetMapping("/students/new")
     public String createStudentForm(Model model) {
-        model.addAttribute("student", new Student());
+        model.addAttribute("studentDto", new StudentDto());
         return "create_student";
     }
 
     @PostMapping("/students")
-    public String saveStudent(@ModelAttribute("student") Student student,
+    public String saveStudent(@ModelAttribute("studentDto") StudentDto studentDto,
                               @RequestParam("imageFile") MultipartFile imageFile,
                               BindingResult result,
                               RedirectAttributes redirectAttributes) {
@@ -50,19 +53,19 @@ public class StudentController {
         }
 
         try {
-            handleImageFile(imageFile, student, redirectAttributes);
+            handleImageFile(imageFile, studentDto, redirectAttributes);
         } catch (IOException e) {
             logger.error("Error processing image file", e);
             redirectAttributes.addFlashAttribute("errorMessage", "Error processing image file. Please try again.");
             return "redirect:/students/new";
         }
 
-        studentService.saveStudent(student);
+        studentService.saveStudent(studentDto);
         redirectAttributes.addFlashAttribute("successMessage", "Student saved successfully.");
         return "redirect:/students";
     }
 
-    private void handleImageFile(MultipartFile imageFile, Student student, RedirectAttributes redirectAttributes) throws IOException {
+    private void handleImageFile(MultipartFile imageFile, StudentDto studentDto, RedirectAttributes redirectAttributes) throws IOException {
         if (imageFile != null && !imageFile.isEmpty()) {
             if (imageFile.getSize() > 10 * 1024 * 1024) {
                 redirectAttributes.addFlashAttribute("errorMessage", "File size should not exceed 10MB.");
@@ -74,7 +77,7 @@ public class StudentController {
                 throw new IOException("Invalid file type");
             }
 
-            student.setImageBytes(imageFile.getBytes());
+            studentDto.setImageBytes(imageFile.getBytes());
         }
     }
 
@@ -82,17 +85,25 @@ public class StudentController {
     public String editStudentForm(@PathVariable Long id, Model model) {
         Student student = studentService.getStudentById(id);
         if (student == null) {
-            throw new EntityNotFoundException("Student with ID " + id + " not found");
+            throw new StudentNotFoundException("Student with ID " + id + " not found");
         }
-        model.addAttribute("student", student);
-        return "edit_student";
+        // Map Student to StudentDto
+        StudentDto studentDto = new StudentDto();
+        studentDto.setFirstName(student.getFirstName());
+        studentDto.setLastName(student.getLastName());
+        studentDto.setEmail(student.getEmail());
+        studentDto.setBirthDate(student.getBirthDate());
+        studentDto.setImageBytes(student.getImageBytes());
+        model.addAttribute("studentDto", studentDto);
+        return "edit_student";// reuse form for update
     }
 
     @PostMapping("/students/{id}")
     public String updateStudent(@PathVariable Long id,
-                                @ModelAttribute("student") Student student,
+                                @Valid @ModelAttribute("studentDto") StudentDto studentDto,
                                 @RequestParam("imageFile") MultipartFile imageFile,
                                 BindingResult result,
+                                Model mode,
                                 RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             return "edit_student";
@@ -101,18 +112,17 @@ public class StudentController {
         try {
             Student existingStudent = studentService.getStudentById(id);
             if (existingStudent == null) {
-                throw new EntityNotFoundException("Student with ID " + id + " not found");
+                throw new StudentNotFoundException("Student with ID " + id + " not found");
             }
 
-            handleImageFile(imageFile, existingStudent, redirectAttributes);
+            handleImageFile(imageFile, studentDto, redirectAttributes);
 
-            existingStudent.setFirstName(student.getFirstName());
-            existingStudent.setLastName(student.getLastName());
-            existingStudent.setEmail(student.getEmail());
-            existingStudent.setBirthdate(student.getBirthdate());
-            existingStudent.setAge(student.getAge());
+            existingStudent.setFirstName(studentDto.getFirstName());
+            existingStudent.setLastName(studentDto.getLastName());
+            existingStudent.setEmail(studentDto.getEmail());
+            existingStudent.setBirthDate(studentDto.getBirthDate());
 
-            studentService.updateStudent(existingStudent);
+            studentService.updateStudent(id, studentDto);
             redirectAttributes.addFlashAttribute("successMessage", "Student updated successfully.");
 
         } catch (EntityNotFoundException e) {

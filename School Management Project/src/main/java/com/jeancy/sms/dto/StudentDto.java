@@ -1,15 +1,14 @@
 package com.jeancy.sms.dto;
 
 import jakarta.validation.constraints.*;
+import java.io.IOException;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor // ✅ Replaces Default constructor
-@AllArgsConstructor // ✅ Replaces all args constructor
 @Data // ✅ Replaces getters, setters, toString and hashCode
 public class StudentDto {
 
@@ -25,7 +24,20 @@ public class StudentDto {
 
     @NotNull(message = "Birth date is required")
     private LocalDate birthDate;
+    
+    private byte[] imageBytes;
 
-    private MultipartFile image;
+    public StudentDto(String firstName, String lastName, String email, 
+                   LocalDate birthDate, MultipartFile imageFile) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.birthDate = birthDate;
+        try {
+            this.imageBytes = imageFile.getBytes();
+        } catch (IOException ex) {
+            ex.getStackTrace();
+        }
+    }    
 
 }

@@ -35,7 +35,7 @@ public class Student {
     
     //birthDate will be used to compute student age
     @Column(name = "birthdate", nullable = false)
-    private LocalDate birthdate;
+    private LocalDate birthDate;
        
     @Column(name = "age", nullable = false)
     private Integer age; // Will be calculeted using birthDate
@@ -45,11 +45,11 @@ public class Student {
     private byte[] imageBytes;
     
     public Student(String firstName, String lastName, String email, 
-                   LocalDate birthdate, MultipartFile imageFile) {
+                   LocalDate birthDate, MultipartFile imageFile) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.birthdate = birthdate;
+        this.birthDate = birthDate;
         try {
             this.imageBytes = imageFile.getBytes();
         } catch (IOException ex) {

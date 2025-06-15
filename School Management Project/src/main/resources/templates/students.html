@@ -67,7 +67,7 @@
                         <td th:text="${student.firstName}"></td>
                         <td th:text="${student.lastName}"></td>
                         <td th:text="${student.email}"></td>
-                        <td th:text="${student.birthdate}" th:format="'dd-MM-yyyy'"></td>
+                        <td th:text="${student.birthDate}" th:format="'dd-MM-yyyy'"></td>
                         <td th:text="${student.age}"></td>
                         <td>
                             <img th:src="@{/students/image/{id}(id=${student.id})}" 
