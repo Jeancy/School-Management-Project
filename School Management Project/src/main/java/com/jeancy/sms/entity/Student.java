@@ -10,13 +10,12 @@ import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import java.io.IOException;
 import java.time.LocalDate;
-import lombok.Getter;
+import java.time.Period;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @Entity
 @Table(name="students", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
@@ -34,12 +33,13 @@ public class Student {
     @Column(name = "email", nullable = false, unique = true)
     private String email;
     
+    //birthDate will be used to compute student age
     @Column(name = "birthdate", nullable = false)
     private LocalDate birthdate;
        
     @Column(name = "age", nullable = false)
-    private Integer age;
-   
+    private Integer age; // Will be calculeted using birthDate
+    // For storing or saving image file or any type of file
     @Lob    
     @Column(name = "image",columnDefinition = "longblob" , nullable = true)
     private byte[] imageBytes;
@@ -55,19 +55,5 @@ public class Student {
         } catch (IOException ex) {
             ex.getStackTrace();
         }
-    }
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Student student = (Student) o;
-        return id != null && id.equals(student.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
-
-    
+    }  
 }

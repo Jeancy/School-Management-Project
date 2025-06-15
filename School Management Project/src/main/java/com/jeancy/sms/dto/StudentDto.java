@@ -4,7 +4,13 @@ import jakarta.validation.constraints.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor // ✅ Replaces Default constructor
+@AllArgsConstructor // ✅ Replaces all args constructor
+@Data // ✅ Replaces getters, setters, toString and hashCode
 public class StudentDto {
 
     @NotBlank(message = "First name is required")
@@ -22,71 +28,4 @@ public class StudentDto {
 
     private MultipartFile image;
 
-    // ✅ Default constructor
-    public StudentDto() {
-    }
-
-    // ✅ All-arguments constructor
-    public StudentDto(String firstName, String lastName, String email, LocalDate birthDate, MultipartFile image) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.birthDate = birthDate;
-        this.image = image;
-    }
-
-    // ✅ Getters and Setters
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public LocalDate getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(LocalDate birthDate) {
-        this.birthDate = birthDate;
-    }
-
-    public MultipartFile getImage() {
-        return image;
-    }
-
-    public void setImage(MultipartFile image) {
-        this.image = image;
-    }
-
-    // ✅ Optional: toString() method for logging/debugging
-
-    @Override
-    public String toString() {
-        return "StudentDto{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", birthDate=" + birthDate +
-                ", image=" + (image != null ? image.getOriginalFilename() : "null") +
-                '}';
-    }
 }

@@ -4,6 +4,8 @@ import com.jeancy.sms.entity.Student;
 import com.jeancy.sms.repository.StudentRepository;
 import com.jeancy.sms.service.StudentService;
 import jakarta.persistence.EntityNotFoundException;
+import java.time.LocalDate;
+import java.time.Period;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +24,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Student saveStudent(Student student) {
+        student.setAge(computeAge(student));
         return studentRepository.save(student);
     }
 
@@ -36,6 +39,7 @@ public class StudentServiceImpl implements StudentService {
         if (!studentRepository.existsById(student.getId())) {
             throw new EntityNotFoundException("Student with ID " + student.getId() + " not found");
         }
+        student.setAge(computeAge(student));
         return studentRepository.save(student);
     }
 
@@ -45,5 +49,9 @@ public class StudentServiceImpl implements StudentService {
             throw new EntityNotFoundException("Student with ID " + id + " not found");
         }
         studentRepository.deleteById(id);
+    }
+    
+    private int computeAge(Student student){
+      return Period.between(student.getBirthdate(), LocalDate.now()).getYears();
     }
 }
